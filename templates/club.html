@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    {% for i in form %}
+        <img src="{{i.logo.url}}" width="200">
+        <h2><b>{{i.name}}</b></h2>
+        <p>Convener: {{i.convener}}</p>
+        {{i.description | safe}}
+        <a href="{% url 'details' i.id %}">view</a>
+    {% endfor %}
+</body>
+</html>
