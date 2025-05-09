@@ -4,63 +4,106 @@
     <meta charset="UTF-8">
     <title>Club Members & Posts</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f6f8;
             margin: 0;
-            padding: 40px;
+            padding: 40px 20px;
         }
 
-        .members-container, .posts-container {
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .members-container,
+        .posts-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
             margin-bottom: 60px;
         }
 
-        .member-card, .post-card {
-            background-color: white;
-            border-radius: 10px;
+        .member-card,
+        .post-card {
+            background-color: #fff;
+            border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
         }
 
-        .member-card img, .post-card img {
+        .member-card:hover,
+        .post-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .member-card img,
+        .post-card img.cover {
             width: 100%;
-            max-height: 180px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            margin-bottom: 15px;
         }
 
-        .member-card p, .post-card p {
-            margin: 5px 0;
+        .member-card p,
+        .post-card p {
+            margin: 6px 0;
+            font-size: 15px;
             color: #333;
         }
 
         .post-card h2 {
-            margin-top: 10px;
             font-size: 20px;
-            color: #2c3e50;
+            margin: 10px 0;
+            color: #1d3557;
         }
 
-        .post-card .description {
+        .description {
             font-size: 15px;
             margin-top: 10px;
-            color: #555;
+            color: #444;
+            line-height: 1.5;
         }
 
-        .post-card .image-grid {
+        .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
             gap: 10px;
             margin-top: 10px;
         }
 
-        .post-card .image-grid img {
-            height: 100px;
-            border-radius: 6px;
+        .image-grid img {
+            width: 100%;
+            height: 90px;
             object-fit: cover;
+            border-radius: 8px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        .action-buttons {
+            margin-top: 10px;
+        }
+
+        .action-buttons a + a {
+            margin-left: 230px;
         }
     </style>
 </head>
@@ -74,6 +117,7 @@
             <p><strong>Name:</strong> {{ i.user }}</p>
             <p><strong>Position:</strong> {{ i.position }}</p>
             <p><strong>Email:</strong> {{ i.email }}</p>
+            <a href="{% url 'Member_edit' i.id %}">Edit</a>
         </div>
         {% endfor %}
     </div>
@@ -82,9 +126,9 @@
     <div class="posts-container">
         {% for i in form3 %}
         <div class="post-card">
-
-                <img src="{{ i.cover_photo.url }}" alt="Cover Photo">
-
+            {% if i.cover_photo %}
+            <img src="{{ i.cover_photo.url }}" class="cover" alt="Cover Photo">
+            {% endif %}
 
             <h2>{{ i.title }}</h2>
             <p><strong>Start:</strong> {{ i.start_date }}</p>
@@ -92,14 +136,16 @@
             <p><strong>Location:</strong> {{ i.location }}</p>
             <p><strong>Posted by:</strong> {{ i.posted_by }}</p>
             <div class="description">{{ i.description|safe }}</div>
-            <a href="{% url 'Post_edit' i.id %}">Edit</a>
-
+            <div class="action-buttons">
+                <a href="{% url 'Post_edit' i.id %}">Edit</a>
+                <a href="{% url 'Delete_post' i.id %}">Delete</a>
+            </div>
             <div class="image-grid">
-                {% if i.pic1 %}<img src="{{ i.pic1.url }}">{% endif %}
-                {% if i.pic2 %}<img src="{{ i.pic2.url }}">{% endif %}
-                {% if i.pic3 %}<img src="{{ i.pic3.url }}">{% endif %}
-                {% if i.pic4 %}<img src="{{ i.pic4.url }}">{% endif %}
-                {% if i.pic5 %}<img src="{{ i.pic5.url }}">{% endif %}
+                {% if i.pic1 %}<img src="{{ i.pic1.url }}" alt="Image 1">{% endif %}
+                {% if i.pic2 %}<img src="{{ i.pic2.url }}" alt="Image 2">{% endif %}
+                {% if i.pic3 %}<img src="{{ i.pic3.url }}" alt="Image 3">{% endif %}
+                {% if i.pic4 %}<img src="{{ i.pic4.url }}" alt="Image 4">{% endif %}
+                {% if i.pic5 %}<img src="{{ i.pic5.url }}" alt="Image 5">{% endif %}
             </div>
         </div>
         {% endfor %}
