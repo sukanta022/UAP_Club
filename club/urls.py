@@ -20,5 +20,9 @@ from . import views
 
 urlpatterns = [
     path('club', views.clubView, name="club"),
-    path('details/<int:p_id>',views.clubMemberView,name="details")
+    path('details/<int:club_id>',views.clubDataView,name="details"),
+    path("Club_create", views.create_club, name = "Club_create"),
+    path("Post_create", views.create_post, name = "post_create"),
+    path("Club_edit/<int:club_id>", views.edit_club, name= "Club_edit"),
+    path("Post_edit/<int:post_id>", views.edit_post, name="Post_edit")
 ]

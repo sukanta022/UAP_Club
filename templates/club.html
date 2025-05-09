@@ -2,15 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Club List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eaeef3;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .club-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .club-card {
+            display: flex;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .club-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .club-logo {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            background-color: #fff; /* Optional: helps logos with transparency */
+            padding: 10px; /* Optional: spacing inside logo container */
+        }
+
+        .club-info {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .club-info h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .club-info p {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .club-info .description {
+            margin-top: 10px;
+        }
+
+        .club-info a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .club-info a:hover {
+            background-color: #1e7e34;
+        }
+    </style>
 </head>
 <body>
-    {% for i in form %}
-        <img src="{{i.logo.url}}" width="200">
-        <h2><b>{{i.name}}</b></h2>
-        <p>Convener: {{i.convener}}</p>
-        {{i.description | safe}}
-        <a href="{% url 'details' i.id %}">view</a>
-    {% endfor %}
+
+    <div class="club-container">
+        {% for i in form %}
+            <div class="club-card">
+                <img class="club-logo" src="{{ i.logo.url }}" alt="Club Logo">
+                <div class="club-info">
+                    <h2>{{ i.name }}</h2>
+                    <p><strong>Convener:</strong> {{ i.convener }}</p>
+                    <div class="description">{{ i.description|safe }}</div>
+                    <a href="{% url 'details' i.id %}">View Details</a>
+                    <a href="{% url 'Club_edit' i.id %}">Edit</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 </body>
 </html>
