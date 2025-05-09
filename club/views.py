@@ -41,7 +41,7 @@ def clubDataView(request,club_id):
     club = get_object_or_404(Club, id=club_id)
     post = ClubPost.objects.filter(club=club)
     members = ClubMember.objects.filter(club=club)
-    return render(request, 'club.html', {
+    return render(request, 'clubDetails.html', {
         'form3': post,
         'form2': members
     })
@@ -65,7 +65,7 @@ def edit_post(request, post_id):
         form = ClubPostForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            return render(request, 'club.html')
+            return render(request, 'home.html')
     else:
         form = ClubPostForm(instance=product)
     return render(request, 'form.html', {
