@@ -51,7 +51,7 @@ def create_post(request):
         form = ClubPostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return render(request, 'home.html')  # Redirect to the product list page after successful creation
+            return render(request, 'home.html')
     else:
         form = ClubPostForm()
     return render(request, 'form.html', {
@@ -79,7 +79,7 @@ def edit_member(request, member_id):
         form = ClubMemberForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            return render(request, 'clubDetails.html')  # Redirect to the product list page after successful update
+            return render(request, 'home.html')  # Redirect to the product list page after successful update
     else:
         form = ClubMemberForm(instance=product)
     return render(request, 'form.html', {
@@ -93,3 +93,17 @@ def post_delete(request, post_id):
         data.delete()
         return clubView(request)
     return render(request,'delete.html', {'data':data})
+
+
+def add_member(request):
+    if request.method == 'POST':
+        form = ClubMemberForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request, 'home.html')
+    else:
+        form = ClubMemberForm()
+    return render(request, 'form.html', {
+        'form': form,
+        'data': "Add Member"
+    })

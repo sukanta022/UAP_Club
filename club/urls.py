@@ -26,5 +26,6 @@ urlpatterns = [
     path("Club_edit/<int:club_id>", views.edit_club, name= "Club_edit"),
     path("Post_edit/<int:post_id>", views.edit_post, name="Post_edit"),
     path("Member_edit/<int:member_id>", views.edit_member, name="Member_edit"),
-    path("Delete_post/<int:post_id>", views.post_delete, name="Delete_post")
+    path("Delete_post/<int:post_id>", views.post_delete, name="Delete_post"),
+    path("Member_add", views.add_member, name="AddMember")
 ]
